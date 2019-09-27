@@ -158,12 +158,6 @@
     <Resource Include="stickicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="a2icon3.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="badge.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="WMPLib">
       <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
       <VersionMajor>1</VersionMajor>
