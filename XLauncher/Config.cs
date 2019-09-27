@@ -25,6 +25,10 @@ namespace XLauncher
         public string ImagePath { get; private set; } = null;
         //music=
         public string MusicPath { get; private set; } = null;
+        //width=
+        public int Width { get; private set; } = 640;
+        //height=
+        public int Height { get; private set; } = 480;
         //close=
         public bool CloseOnPlay { get; private set; } = true;
 
@@ -87,6 +91,12 @@ namespace XLauncher
                     break;
                 case "music":
                     MusicPath = line[1];
+                    break;
+                case "width":
+                    Width = int.Parse(line[1]);
+                    break;
+                case "height":
+                    Height = int.Parse(line[1]);
                     break;
                 case "close":
                     CloseOnPlay = bool.Parse(line[1]);
