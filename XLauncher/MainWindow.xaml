@@ -4,7 +4,7 @@
         Title="MainWindow" Height="480" Width="800" ResizeMode="NoResize" IsTabStop="True" WindowStyle="None" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     
     <Grid>
-        <Image x:Name="StartupImage" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Stretch="UniformToFill"/>
+        <Image x:Name="StartupImage" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Stretch="Fill"/>
         <Button x:Name="ButtonExit" Content="" HorizontalAlignment="Right" Margin="0,0,25,25" VerticalAlignment="Bottom" Width="40" FontFamily="SansSerif" Height="40" Background="Transparent" Foreground="#00000000" BorderBrush="#00000000" BorderThickness="0" Click="ButtonExit_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">

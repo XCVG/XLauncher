@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using WMPLib;
 
 namespace XLauncher
 {
@@ -13,6 +14,7 @@ namespace XLauncher
     {
 
         private Config Config;
+        private WindowsMediaPlayer Player;
 
         private string CurrentDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
@@ -55,6 +57,18 @@ namespace XLauncher
                     if (File.Exists(imagePath))
                     {
                         StartupImage.Source = new BitmapImage(new Uri(imagePath));
+                    }
+                }
+
+                //music!
+                if(!string.IsNullOrEmpty(Config.MusicPath))
+                {
+                    string musicPath = Path.Combine(CurrentDirectory, Config.MusicPath);
+                    if(File.Exists(musicPath))
+                    {
+                        Player = new WindowsMediaPlayer(); //COM magic, I guess
+                        Player.URL = musicPath;
+                        Player.controls.play();
                     }
                 }
             }
