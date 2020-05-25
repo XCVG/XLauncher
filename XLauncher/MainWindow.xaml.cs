@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using NAudio;
 using NAudio.Wave;
+using NAudioExtensions;
 
 namespace XLauncher
 {
@@ -17,7 +18,7 @@ namespace XLauncher
         private Config Config;
         //private WindowsMediaPlayer Player;
 
-        private AudioFileReader MusicFile;
+        private LoopStream MusicStream;
         private WaveOutEvent OutputDevice;
 
         private string CurrentDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -72,8 +73,12 @@ namespace XLauncher
                         string musicPath = Path.Combine(CurrentDirectory, Config.MusicPath);
                         if (File.Exists(musicPath))
                         {
-                            MusicFile = new AudioFileReader(musicPath);
-                            StartMusicPlayback();
+                            MusicStream = new LoopStream(new AudioFileReader(musicPath));
+                            MusicStream.EnableLooping = Config.LoopMusic;
+                            OutputDevice = new WaveOutEvent();
+                            OutputDevice.DeviceNumber = -1;
+                            OutputDevice.Init(MusicStream);
+                            OutputDevice.Play();
                         }
                     }
                     catch(Exception ex)
@@ -99,8 +104,8 @@ namespace XLauncher
             if (OutputDevice != null)
                 OutputDevice.Dispose();
 
-            if (MusicFile != null)
-                MusicFile.Dispose();
+            if (MusicStream != null)
+                MusicStream.Dispose();
         }
 
 
@@ -172,26 +177,6 @@ namespace XLauncher
             //probably want to close on play
             if(Config.CloseOnPlay)
                 Close();
-        }
-
-        //really gross hack to loop
-        private void HandleMusicEnded(object sender, StoppedEventArgs e)
-        {
-            StartMusicPlayback();
-        }
-
-        private void StartMusicPlayback()
-        {
-            if (OutputDevice != null)
-                OutputDevice.Dispose();
-
-            MusicFile.Position = 0;
-            OutputDevice = new WaveOutEvent();
-            OutputDevice.DeviceNumber = -1;
-            OutputDevice.Init(MusicFile);
-            OutputDevice.Play();
-            if (Config.LoopMusic)
-                OutputDevice.PlaybackStopped += HandleMusicEnded;
         }
 
         /// <summary>
