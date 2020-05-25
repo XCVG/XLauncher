@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using Plugin.SimpleAudioPlayer;
+//using WMPLib;
 
 namespace XLauncher
 {
@@ -15,7 +15,6 @@ namespace XLauncher
 
         private Config Config;
         //private WindowsMediaPlayer Player;
-        private ISimpleAudioPlayer Player;
 
         private string CurrentDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
@@ -67,13 +66,9 @@ namespace XLauncher
                     string musicPath = Path.Combine(CurrentDirectory, Config.MusicPath);
                     if(File.Exists(musicPath))
                     {
-                        Player = CrossSimpleAudioPlayer.Current;
-                        using(FileStream fs = new FileStream(musicPath, FileMode.Open))
-                        {
-                            Player.Load(fs);
-                        }
-                        Player.Loop = true; //do we want this? config setting?
-                        Player.Play();                        
+                        //Player = new WindowsMediaPlayer(); //COM magic, I guess
+                        //Player.URL = musicPath;
+                        //Player.controls.play();
                     }
                 }
             }
