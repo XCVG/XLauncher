@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace XLauncher
 {
@@ -11,97 +12,49 @@ namespace XLauncher
     /// </summary>
     class Config
     {
-        //title=
+
+        [JsonProperty]
         public string WindowTitle { get; private set; } = "Game Launcher";
-        //start=
+
+        [JsonProperty]
         public string GamePath { get; private set; } = "game.exe"; //dumb default
-        //args=
+
+        [JsonProperty]
         public string GameArgs { get; private set; } = null;
-        //opts=
+
+        [JsonProperty]
         public string OptionsPath { get; private set; } = null;
-        //help=
+
+        [JsonProperty]
         public string HelpPath { get; private set; } = null;
-        //image=
+
+        [JsonProperty]
         public string ImagePath { get; private set; } = null;
-        //music=
+
+        [JsonProperty]
         public string MusicPath { get; private set; } = null;
-        //width=
+
+        [JsonProperty]
+        public bool LoopMusic { get; private set; } = false;
+
+        [JsonProperty]
         public int Width { get; private set; } = 640;
-        //height=
+
+        [JsonProperty]
         public int Height { get; private set; } = 480;
-        //close=
+
+        [JsonProperty]
         public bool CloseOnPlay { get; private set; } = true;
-
-        public Config(string path)
+        
+        private Config()
         {
-            if (File.Exists(path))
-                ParseFile(File.ReadAllLines(path));            
+
         }
 
-        private void ParseFile(string[] lines)
+        public static Config ReadConfig(string path)
         {
-            foreach(string line in lines)
-            {
-                try
-                {
-                    if (string.IsNullOrWhiteSpace(line)) //skip empty lines
-                        continue;
-
-                    string trimmedLine = line.Trim();
-                    if (trimmedLine.StartsWith(";", StringComparison.OrdinalIgnoreCase) ||
-                        trimmedLine.StartsWith("[", StringComparison.OrdinalIgnoreCase)) //skip comments and headers
-                        continue;
-
-                    int indexOfEquals = trimmedLine.IndexOf('=');
-                    if (indexOfEquals == -1)
-                        continue;
-
-                    string[] splitLine = new string[] { trimmedLine.Substring(0, indexOfEquals), trimmedLine.Substring(indexOfEquals + 1, trimmedLine.Length - indexOfEquals - 1) };
-                    ParseLine(splitLine);
-                }
-                catch(Exception ex)
-                {
-                    Debug.WriteLine($"Parse error on \"{line}\": {ex.GetType().Name}");
-                }
-            }
+            return JsonConvert.DeserializeObject<Config>(File.ReadAllText(path));
         }
-
-        private void ParseLine(string[] line)
-        {
-            string key = line[0].ToLower(CultureInfo.InvariantCulture);
-            switch (key)
-            {
-                case "title":
-                    WindowTitle = line[1];
-                    break;
-                case "start":
-                    GamePath = line[1];
-                    break;
-                case "args":
-                    GameArgs = line[1];
-                    break;
-                case "options":
-                    OptionsPath = line[1];
-                    break;
-                case "help":
-                    HelpPath = line[1];
-                    break;
-                case "image":
-                    ImagePath = line[1];
-                    break;
-                case "music":
-                    MusicPath = line[1];
-                    break;
-                case "width":
-                    Width = int.Parse(line[1]);
-                    break;
-                case "height":
-                    Height = int.Parse(line[1]);
-                    break;
-                case "close":
-                    CloseOnPlay = bool.Parse(line[1]);
-                    break;
-            }
-        }
+        
     }
 }

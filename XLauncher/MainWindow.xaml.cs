@@ -3,7 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using WMPLib;
+using NAudio;
+using NAudio.Wave;
+using NAudioExtensions;
 
 namespace XLauncher
 {
@@ -14,9 +16,12 @@ namespace XLauncher
     {
 
         private Config Config;
-        private WindowsMediaPlayer Player;
+        //private WindowsMediaPlayer Player;
 
-        private string CurrentDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        private LoopStream MusicStream;
+        private WaveOutEvent OutputDevice;
+
+        private string CurrentDirectory => Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
 
 
         public MainWindow()
@@ -30,8 +35,8 @@ namespace XLauncher
             {
 
                 //get startup args
-                string configPath = Path.Combine(CurrentDirectory, "startup.ini");
-                Config = new Config(configPath);
+                string configPath = Path.Combine(CurrentDirectory, "startup.json");
+                Config = Config.ReadConfig(configPath);
 
                 //do stuff
                 Title = Config.WindowTitle;
@@ -63,18 +68,29 @@ namespace XLauncher
                 //music!
                 if(!string.IsNullOrEmpty(Config.MusicPath))
                 {
-                    string musicPath = Path.Combine(CurrentDirectory, Config.MusicPath);
-                    if(File.Exists(musicPath))
+                    try
                     {
-                        Player = new WindowsMediaPlayer(); //COM magic, I guess
-                        Player.URL = musicPath;
-                        Player.controls.play();
+                        string musicPath = Path.Combine(CurrentDirectory, Config.MusicPath);
+                        if (File.Exists(musicPath))
+                        {
+                            MusicStream = new LoopStream(new AudioFileReader(musicPath));
+                            MusicStream.EnableLooping = Config.LoopMusic;
+                            OutputDevice = new WaveOutEvent();
+                            OutputDevice.DeviceNumber = -1;
+                            OutputDevice.Init(MusicStream);
+                            OutputDevice.Play();
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        Debug.WriteLine($"Failed to play music!\n {(ex.GetType().Name)}: {ex.Message}");
+                        Debug.WriteLine(ex);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to initialize launcher! {(ex.GetType().Name)}: {ex.Message}");
+                MessageBox.Show($"Failed to initialize launcher!\n {(ex.GetType().Name)}: {ex.Message}");
 
                 Debug.WriteLine("Failed to initialize launcher!");
                 Debug.WriteLine(ex);
@@ -82,7 +98,16 @@ namespace XLauncher
             }
         }
 
-        
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            //dispose of audio
+            if (OutputDevice != null)
+                OutputDevice.Dispose();
+
+            if (MusicStream != null)
+                MusicStream.Dispose();
+        }
+
 
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
         {
@@ -96,7 +121,10 @@ namespace XLauncher
             //System.Diagnostics.Debug.Write(helpPath);
             try
             {
-                Process.Start(Path.Combine(CurrentDirectory, Config.HelpPath));
+                var helpProc = new Process();
+                helpProc.StartInfo.FileName = Path.Combine(CurrentDirectory, Config.HelpPath);
+                helpProc.StartInfo.UseShellExecute = true;
+                helpProc.Start();
             }
             catch (Exception ex)
             {
@@ -113,7 +141,10 @@ namespace XLauncher
             //System.Diagnostics.Debug.Write(optsPath);
             try
             {
-                Process.Start(Path.Combine(CurrentDirectory, Config.OptionsPath));
+                var optionsProc = new Process();
+                optionsProc.StartInfo.FileName = Path.Combine(CurrentDirectory, Config.OptionsPath);
+                optionsProc.StartInfo.UseShellExecute = true;
+                optionsProc.Start();
             }
             catch (Exception ex)
             {
@@ -176,5 +207,6 @@ namespace XLauncher
             Application.Current.MainWindow.Left = (((workAreaWidth - (Width)) / 2) + (workArea.Left * dpiScaling)); //we do not need to scale the width
             Application.Current.MainWindow.Top = (((workAreaHeight - (Height)) / 2) + (workArea.Top * dpiScaling));
         }
+
     }
 }
