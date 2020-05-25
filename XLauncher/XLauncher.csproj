@@ -21,7 +21,7 @@
     <AssemblyTitle>XLauncher</AssemblyTitle>
     <Company>XCVG Systems</Company>
     <Product>XLauncher</Product>
-    <Copyright>Copyright © XCVG Systems 2019</Copyright>
+    <Copyright>Copyright © XCVG Systems 2020</Copyright>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -36,6 +36,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>stickicon.ico</ApplicationIcon>
+    <Version>2.0.0</Version>
+    <Description>Launcher for XCVG Systems games</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NAudio" Version="1.10.0" />
