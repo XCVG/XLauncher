@@ -38,6 +38,9 @@
     <ApplicationIcon>stickicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.4.0" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="exit.png" />
   </ItemGroup>
   <ItemGroup>
