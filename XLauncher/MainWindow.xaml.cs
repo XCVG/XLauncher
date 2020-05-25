@@ -21,7 +21,7 @@ namespace XLauncher
         private LoopStream MusicStream;
         private WaveOutEvent OutputDevice;
 
-        private string CurrentDirectory => Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        private string CurrentDirectory => Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
 
 
         public MainWindow()
@@ -121,7 +121,10 @@ namespace XLauncher
             //System.Diagnostics.Debug.Write(helpPath);
             try
             {
-                Process.Start(Path.Combine(CurrentDirectory, Config.HelpPath));
+                var helpProc = new Process();
+                helpProc.StartInfo.FileName = Path.Combine(CurrentDirectory, Config.HelpPath);
+                helpProc.StartInfo.UseShellExecute = true;
+                helpProc.Start();
             }
             catch (Exception ex)
             {
@@ -138,7 +141,10 @@ namespace XLauncher
             //System.Diagnostics.Debug.Write(optsPath);
             try
             {
-                Process.Start(Path.Combine(CurrentDirectory, Config.OptionsPath));
+                var optionsProc = new Process();
+                optionsProc.StartInfo.FileName = Path.Combine(CurrentDirectory, Config.OptionsPath);
+                optionsProc.StartInfo.UseShellExecute = true;
+                optionsProc.Start();
             }
             catch (Exception ex)
             {
