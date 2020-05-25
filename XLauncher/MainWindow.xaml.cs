@@ -73,11 +73,7 @@ namespace XLauncher
                         if (File.Exists(musicPath))
                         {
                             MusicFile = new AudioFileReader(musicPath);
-                            OutputDevice = new WaveOutEvent();
-                            OutputDevice.DeviceNumber = -1;
-                            OutputDevice.Init(MusicFile);
-                            OutputDevice.Play();
-                            //we may support looping someday
+                            StartMusicPlayback();
                         }
                     }
                     catch(Exception ex)
@@ -176,6 +172,26 @@ namespace XLauncher
             //probably want to close on play
             if(Config.CloseOnPlay)
                 Close();
+        }
+
+        //really gross hack to loop
+        private void HandleMusicEnded(object sender, StoppedEventArgs e)
+        {
+            StartMusicPlayback();
+        }
+
+        private void StartMusicPlayback()
+        {
+            if (OutputDevice != null)
+                OutputDevice.Dispose();
+
+            MusicFile.Position = 0;
+            OutputDevice = new WaveOutEvent();
+            OutputDevice.DeviceNumber = -1;
+            OutputDevice.Init(MusicFile);
+            OutputDevice.Play();
+            if (Config.LoopMusic)
+                OutputDevice.PlaybackStopped += HandleMusicEnded;
         }
 
         /// <summary>
