@@ -34,8 +34,8 @@ namespace XLauncher
             {
 
                 //get startup args
-                string configPath = Path.Combine(CurrentDirectory, "startup.ini");
-                Config = new Config(configPath);
+                string configPath = Path.Combine(CurrentDirectory, "startup.json");
+                Config = Config.ReadConfig(configPath);
 
                 //do stuff
                 Title = Config.WindowTitle;
