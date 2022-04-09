@@ -44,9 +44,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="exit.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="exit1.png" />
     <Resource Include="exit2.png" />
   </ItemGroup>
