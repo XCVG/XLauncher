@@ -120,9 +120,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="exit.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="exit1.png" />
     <Resource Include="exit2.png" />
   </ItemGroup>

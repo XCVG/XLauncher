@@ -1,0 +1,13 @@
+{
+  "WindowTitle": "Game Launcher",
+  "GamePath": "Game.exe",
+  "GameArgs": "-sv_cheats 1",
+  "OptionsPath": "setup.exe",
+  "HelpPath": "docs/readme.txt",
+  "ImagePath": "startup.png",
+  "MusicPath": "storytime.wma",
+  "Width": 640,
+  "Height": 480,
+  "CloseOnPlay": true,
+  "LoopMusic": true
+}
