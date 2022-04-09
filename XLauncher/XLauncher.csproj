@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -21,9 +21,9 @@
     <AssemblyTitle>XLauncher</AssemblyTitle>
     <Company>XCVG Systems</Company>
     <Product>XLauncher</Product>
-    <Copyright>Copyright © XCVG Systems 2020</Copyright>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <FileVersion>3.0.0.0</FileVersion>
+    <Copyright>Copyright © XCVG Systems 2022</Copyright>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <FileVersion>4.0.0.0</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <UseWPF>true</UseWPF>
 	<UseWindowsForms>true</UseWindowsForms>
@@ -36,7 +36,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>stickicon.ico</ApplicationIcon>
-    <Version>3.0.0</Version>
+    <Version>4.0.0</Version>
     <Description>Launcher for XCVG Systems games</Description>
   </PropertyGroup>
   <ItemGroup>
@@ -62,5 +62,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="stickicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>
