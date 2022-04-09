@@ -14,7 +14,7 @@ Build the project.
 
 Copy everything from the build folder to your destination folder. Copy `startup.example.json` to your destination folder, edit to your liking, and rename to `config.json`.
 
-The program icon is built into the application, you can change it from the XLauncher project properties (Win32 Resources->Icon in VS2022).
+The program icon is built into the application, you can change it from the XLauncher project properties (Application->Resources->Icon).
 
 ## License
 
