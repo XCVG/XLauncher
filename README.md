@@ -1,9 +1,12 @@
 # XLauncher
 **A basic launcher for basic games**
+**Legacy (.NET Framework) version**
 
 ## Overview
 
-This is a game launcher supporting custom image and music, configurable with a JSON file. This is the "legacy" branch that uses .NET Framework instead of .NET (Core).
+This is a game launcher supporting custom image and music, configurable with a JSON file. It is built with .NET and WPF.
+
+This is the "legacy" branch that uses .NET Framework instead of .NET (Core). It supports most of the same features, except for looping music. For more information on the differences, see the README on the main branch
 
 ## Usage
 
