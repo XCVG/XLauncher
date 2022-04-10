@@ -23,7 +23,7 @@ Note that the `netcore` branch is an artifact of the initial porting process and
 
 ### .NET Framework version (netfx branch)
 
-This version uses .NET Framework. It is the first version of this project to exist, but has been resurrected with features backported from the .NET version. It uses WMPLib for music playback, and does not support looping music. As time goes on it is likely this branch will lag behind the other in features.
+This version uses .NET Framework. It is the first version of this project to exist, but has been resurrected with features backported from the .NET version. It uses WMPLib for music playback. While it is currently at feature parity, as time goes on it is likely this branch will lag behind the other in features.
 
 The executable produced is dependent on .NET Framework and is very small. There is no self-contained option, but .NET Framework has been provided with Windows for years and almost all users will have it installed already.
 
@@ -34,6 +34,8 @@ Publish (not build) the project. There are publish profiles included for both se
 Copy everything from the publish folder to your destination folder. Copy `startup.example.json` to your destination folder, edit to your liking, and rename to `config.json`.
 
 The program icon is built into the application, you can change it from the XLauncher project properties (Win32 Resources->Icon in VS2022).
+
+Several formats work for the background image (BMP, PNG, JPEG, etc) but the background music must be in Windows Media Audio (WMA) format.
 
 ## License
 
