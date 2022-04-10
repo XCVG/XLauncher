@@ -16,6 +16,8 @@ Copy everything from the build folder to your destination folder. Copy `startup.
 
 The program icon is built into the application, you can change it from the XLauncher project properties (Application->Resources->Icon).
 
+Several formats work for the background image (BMP, PNG, JPEG, etc) but the background music must be in Windows Media Audio (WMA) format.
+
 ## License
 
 This project is licensed under the MIT License, a copy of which is available in COPYING.txt
