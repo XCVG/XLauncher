@@ -68,6 +68,7 @@ namespace XLauncher
                     {
                         Player = new WindowsMediaPlayer(); //COM magic, I guess
                         Player.URL = musicPath;
+                        Player.settings.setMode("loop", Config.LoopMusic);
                         Player.controls.play();
                     }
                 }

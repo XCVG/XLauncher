@@ -6,7 +6,7 @@
 
 This is a game launcher supporting custom image and music, configurable with a JSON file. It is built with .NET and WPF.
 
-This is the "legacy" branch that uses .NET Framework instead of .NET (Core). It supports most of the same features, except for looping music. For more information on the differences, see the README on the main branch
+This is the "legacy" branch that uses .NET Framework instead of .NET (Core). It is currently at feature parity but this may change as it is not the focus of development. For more information on the differences, see the README on the main branch
 
 ## Usage
 
